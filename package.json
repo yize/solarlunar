@@ -1,0 +1,30 @@
+{
+  "name": "solarlunar",
+  "version": "1.0.0",
+  "description": "公历阴历（农历）互转",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yize/solar2lunar.git"
+  },
+  "keywords": [
+    "calendar",
+    "农历",
+    "阴历",
+    "solar",
+    "lunar"
+  ],
+  "author": "yize",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yize/solar2lunar/issues"
+  },
+  "homepage": "https://github.com/yize/solar2lunar#readme",
+  "devDependencies": {
+    "mocha": "~2.3.3",
+    "should": "~7.1.0"
+  }
+}
