@@ -4,7 +4,7 @@
 - Solar : 阳历 公历
 - Lunar : 阴历 农历
 
-[![Build Status](https://travis-ci.org/yize/solorlunar.svg?branch=master)](https://travis-ci.org/yize/solarlunar)
+[![Build Status](https://travis-ci.org/yize/solarlunar.svg?branch=master)](https://travis-ci.org/yize/solarlunar)
 
 公历和阴历互转
 
