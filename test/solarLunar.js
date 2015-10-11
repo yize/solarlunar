@@ -4,8 +4,6 @@ var solar2lunarData2 = solarLunar.solar2lunar(2015, 10, 8);// 转换为阴历
 var lunar2solarData = solarLunar.lunar2solar(2015, 10, 2);// 转换为公历
 var lunar2solarData2 = solarLunar.lunar2solar(2015, 8, 26);// 转换为公历
 
-console.log(lunar2solarData2);
-
 var should = require('should');
 
 describe('should work', function () {
@@ -120,6 +118,18 @@ describe('should work', function () {
         });
         it('term should equal empty string', function () {
             should(lunar2solarData.term).be.exactly('')
+        });
+    });
+
+    describe('lunar2solar that has term',function(){
+        it('isTerm should be true',function(){
+            should(lunar2solarData2.isTerm).be.true();
+        });
+        it('term should not be null',function(){
+            should(lunar2solarData2.term).not.be.null();
+        });
+        it('term should equal 寒露',function(){
+            should(lunar2solarData2.term).be.equal('寒露');
         });
     });
 });

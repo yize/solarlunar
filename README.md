@@ -182,4 +182,6 @@ var animal = solarLunar.getAnimal(1987) ;//animal='兔'
 - (Boolean)`isTerm` : 是否有节气
 - (String)`term` : 节气，如果没有则返回空字符串
 
-作者博客： [http://blog.jjonline.cn/userInterFace/173.html](http://blog.jjonline.cn/userInterFace/173.html)
+links
+
+- [http://blog.jjonline.cn/userInterFace/173.html](http://blog.jjonline.cn/userInterFace/173.html)
