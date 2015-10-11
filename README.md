@@ -1,12 +1,10 @@
-# solarLunar
+# solarLunar [![Build Status](https://travis-ci.org/yize/solarlunar.svg?branch=master)](https://travis-ci.org/yize/solarlunar)
 -----
 
-- Solar : 阳历 公历
-- Lunar : 阴历 农历
+1900年至2100年公历、农历互转
 
-[![Build Status](https://travis-ci.org/yize/solarlunar.svg?branch=master)](https://travis-ci.org/yize/solarlunar)
-
-公历和阴历互转
+- Solar : 公历 阳历
+- Lunar : 农历 阴历
 
 支持年份：`1900-2100`
 
@@ -15,7 +13,7 @@
 ``` js
 var solarLunar = require('solarLunar')
 
-var solar2lunarData = solarLunar.solar2lunar(2015, 10, 8);// 输入的日子为阳历
+var solar2lunarData = solarLunar.solar2lunar(2015, 10, 8);// 输入的日子为公历
 var lunar2solarData = solarLunar.lunar2solar(2015, 8, 26);// 输入的日子为农历
 ```
 
@@ -182,6 +180,6 @@ var animal = solarLunar.getAnimal(1987) ;//animal='兔'
 - (Boolean)`isTerm` : 是否有节气
 - (String)`term` : 节气，如果没有则返回空字符串
 
-links
+## Links
 
 - [http://blog.jjonline.cn/userInterFace/173.html](http://blog.jjonline.cn/userInterFace/173.html)
