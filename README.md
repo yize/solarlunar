@@ -174,7 +174,6 @@ var animal = solarLunar.getAnimal(1987) ;//animal='兔'
 - (Number)`cDay` : 公历日
 - (Number)`nWeek` : 周几
 - (String)`ncWeek` : 中文周几
-- (Object)`solar2lunar` : 公历转换为农历
 - (Boolean)`isLeap` : 是否是闰月
 - (Boolean)`isToday` : 是否是今天
 - (Boolean)`isTerm` : 是否有节气
