@@ -1,6 +1,10 @@
 var solarLunar = require('../src/solarLunar');
 var solar2lunarData = solarLunar.solar2lunar(2015, 10, 2);// 转换为阴历
+var solar2lunarData2 = solarLunar.solar2lunar(2015, 10, 8);// 转换为阴历
 var lunar2solarData = solarLunar.lunar2solar(2015, 10, 2);// 转换为公历
+var lunar2solarData2 = solarLunar.lunar2solar(2015, 8, 26);// 转换为公历
+
+console.log(lunar2solarData2);
 
 var should = require('should');
 
@@ -18,14 +22,14 @@ describe('should work', function () {
         it('lDay should equal 20', function () {
             solar2lunarData.lDay.should.be.equal(20)
         });
-        it('Animal should equal 羊', function () {
-            solar2lunarData.Animal.should.be.equal('羊')
+        it('animal should equal 羊', function () {
+            solar2lunarData.animal.should.be.equal('羊')
         });
-        it('IMonthCn should equal 八月', function () {
-            solar2lunarData.IMonthCn.should.be.equal('八月')
+        it('monthCn should equal 八月', function () {
+            solar2lunarData.monthCn.should.be.equal('八月')
         });
-        it('IDayCn should equal 二十', function () {
-            solar2lunarData.IDayCn.should.be.equal('二十')
+        it('dayCn should equal 二十', function () {
+            solar2lunarData.dayCn.should.be.equal('二十')
         });
         it('gzYear should equal 乙未', function () {
             solar2lunarData.gzYear.should.be.equal('乙未')
@@ -51,8 +55,20 @@ describe('should work', function () {
         it('isTerm should equal false', function () {
             solar2lunarData.isTerm.should.be.false()
         });
-        it('Term should equal null', function () {
-            should(solar2lunarData.Term).be.exactly(null)
+        it('term should equal empty string', function () {
+            should(solar2lunarData.term).be.exactly('')
+        });
+    });
+
+    describe('solar2lunar that has term',function(){
+        it('isTerm should be true',function(){
+            should(solar2lunarData2.isTerm).be.true();
+        });
+        it('term should not be null',function(){
+            should(solar2lunarData2.term).not.be.null();
+        });
+        it('term should equal 寒露',function(){
+            should(solar2lunarData2.term).be.equal('寒露');
         });
     });
 
@@ -69,14 +85,14 @@ describe('should work', function () {
         it('lDay should equal 2', function () {
             lunar2solarData.lDay.should.be.equal(2)
         });
-        it('Animal should equal 羊', function () {
-            lunar2solarData.Animal.should.be.equal('羊')
+        it('animal should equal 羊', function () {
+            lunar2solarData.animal.should.be.equal('羊')
         });
-        it('IMonthCn should equal 十月', function () {
-            lunar2solarData.IMonthCn.should.be.equal('十月')
+        it('monthCn should equal 十月', function () {
+            lunar2solarData.monthCn.should.be.equal('十月')
         });
-        it('IDayCn should equal 初二', function () {
-            lunar2solarData.IDayCn.should.be.equal('初二')
+        it('dayCn should equal 初二', function () {
+            lunar2solarData.dayCn.should.be.equal('初二')
         });
         it('gzYear should equal 乙未', function () {
             lunar2solarData.gzYear.should.be.equal('乙未')
@@ -102,8 +118,8 @@ describe('should work', function () {
         it('isTerm should equal false', function () {
             lunar2solarData.isTerm.should.be.false()
         });
-        it('Term should equal null', function () {
-            should(lunar2solarData.Term).be.exactly(null)
+        it('term should equal empty string', function () {
+            should(lunar2solarData.term).be.exactly('')
         });
     });
 });
