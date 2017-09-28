@@ -31,7 +31,7 @@ var solarLunar = {
         0x07954, 0x06aa0, 0x0ad50, 0x05b52, 0x04b60, 0x0a6e6, 0x0a4e0, 0x0d260, 0x0ea65, 0x0d530,//2020-2029
         0x05aa0, 0x076a3, 0x096d0, 0x04bd7, 0x04ad0, 0x0a4d0, 0x1d0b6, 0x0d250, 0x0d520, 0x0dd45,//2030-2039
         0x0b5a0, 0x056d0, 0x055b2, 0x049b0, 0x0a577, 0x0a4b0, 0x0aa50, 0x1b255, 0x06d20, 0x0ada0,//2040-2049
-    /**Add By JJonline@JJonline.Cn**/
+        /**Add By JJonline@JJonline.Cn**/
         0x14b63, 0x09370, 0x049f8, 0x04970, 0x064b0, 0x168a6, 0x0ea50, 0x06b20, 0x1a6c4, 0x0aae0,//2050-2059
         0x0a2e0, 0x0d2e3, 0x0c960, 0x0d557, 0x0d4a0, 0x0da50, 0x05d55, 0x056a0, 0x0a6d0, 0x055d4,//2060-2069
         0x052d0, 0x0a9b8, 0x0a950, 0x0b4a0, 0x0b6a6, 0x0ad50, 0x055a0, 0x0aba4, 0x0a5b0, 0x052b0,//2070-2079
@@ -160,10 +160,10 @@ var solarLunar = {
     /**
      * 数字转中文速查表
      * @Array Of Property
-     * @trans ['日','一','二','三','四','五','六','七','八','九','十']
+     * @trans ['零','一','二','三','四','五','六','七','八','九','十']
      * @return Cn string
      */
-    nStr1: ["\u65e5", "\u4e00", "\u4e8c", "\u4e09", "\u56db", "\u4e94", "\u516d", "\u4e03", "\u516b", "\u4e5d", "\u5341"],
+    nStr1: ["\u96F6", "\u4e00", "\u4e8c", "\u4e09", "\u56db", "\u4e94", "\u516d", "\u4e03", "\u516b", "\u4e5d", "\u5341"],
 
 
     /**
@@ -234,7 +234,7 @@ var solarLunar = {
         if (m > 12 || m < 1) {
             return -1
         }//月份参数从1至12，参数错误返回-1
-        return ( (solarLunar.lunarInfo[y - 1900] & (0x10000 >> m)) ? 30 : 29 );
+        return ((solarLunar.lunarInfo[y - 1900] & (0x10000 >> m)) ? 30 : 29);
     },
 
 
@@ -323,6 +323,20 @@ var solarLunar = {
         return parseInt(_calDay[n - 1]);
     },
 
+    /**
+     * 传入农历年份数字返回汉语通俗表示法
+     * @param lunar year
+     * @return string
+     * @eg: 
+     */
+    toChinaYear: function (y) { //年 => \u5E74
+        let oxxx = parseInt(y / 1000);
+        let xoxx = parseInt(y % 1000 / 100);
+        let xxox = parseInt(y % 100 / 10);
+        let xxxo = y % 10;
+
+        return solarLunar.nStr1[oxxx] + solarLunar.nStr1[xoxx] + solarLunar.nStr1[xxox] + solarLunar.nStr1[xxxo] + "\u5E74";
+    },
 
     /**
      * 传入农历数字月份返回汉语通俗表示法
@@ -360,7 +374,7 @@ var solarLunar = {
                 s = '\u4e09\u5341';
                 break;
                 break;
-            default :
+            default:
                 s = solarLunar.nStr2[Math.floor(d / 10)];
                 s += solarLunar.nStr1[d % 10];
         }
@@ -505,6 +519,7 @@ var solarLunar = {
             'lMonth': month,
             'lDay': day,
             'animal': solarLunar.getAnimal(year),
+            'yearCn': solarLunar.toChinaYear(year),
             'monthCn': (isLeap ? "\u95f0" : '') + solarLunar.toChinaMonth(month),
             'dayCn': solarLunar.toChinaDay(day),
             'cYear': y,

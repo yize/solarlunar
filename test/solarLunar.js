@@ -23,6 +23,9 @@ describe('should work', function () {
         it('animal should equal 羊', function () {
             solar2lunarData.animal.should.be.equal('羊')
         });
+        it('yearCn should equal 二零一五年', function () {
+            solar2lunarData.yearCn.should.be.equal('二零一五年');
+        })
         it('monthCn should equal 八月', function () {
             solar2lunarData.monthCn.should.be.equal('八月')
         });
@@ -58,14 +61,14 @@ describe('should work', function () {
         });
     });
 
-    describe('solar2lunar that has term',function(){
-        it('isTerm should be true',function(){
+    describe('solar2lunar that has term', function () {
+        it('isTerm should be true', function () {
             should(solar2lunarData2.isTerm).be.true();
         });
-        it('term should not be null',function(){
+        it('term should not be null', function () {
             should(solar2lunarData2.term).not.be.null();
         });
-        it('term should equal 寒露',function(){
+        it('term should equal 寒露', function () {
             should(solar2lunarData2.term).be.equal('寒露');
         });
     });
@@ -86,6 +89,9 @@ describe('should work', function () {
         it('animal should equal 羊', function () {
             lunar2solarData.animal.should.be.equal('羊')
         });
+        it('yearCn should equal 二零一五年', function () {
+            solar2lunarData.yearCn.should.be.equal('二零一五年');
+        })
         it('monthCn should equal 十月', function () {
             lunar2solarData.monthCn.should.be.equal('十月')
         });
@@ -121,14 +127,14 @@ describe('should work', function () {
         });
     });
 
-    describe('lunar2solar that has term',function(){
-        it('isTerm should be true',function(){
+    describe('lunar2solar that has term', function () {
+        it('isTerm should be true', function () {
             should(lunar2solarData2.isTerm).be.true();
         });
-        it('term should not be null',function(){
+        it('term should not be null', function () {
             should(lunar2solarData2.term).not.be.null();
         });
-        it('term should equal 寒露',function(){
+        it('term should equal 寒露', function () {
             should(lunar2solarData2.term).be.equal('寒露');
         });
     });
