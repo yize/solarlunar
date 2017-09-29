@@ -330,10 +330,10 @@ var solarLunar = {
      * @eg: 
      */
     toChinaYear: function (y) { //年 => \u5E74
-        let oxxx = parseInt(y / 1000);
-        let xoxx = parseInt(y % 1000 / 100);
-        let xxox = parseInt(y % 100 / 10);
-        let xxxo = y % 10;
+        var oxxx = parseInt(y / 1000);
+        var xoxx = parseInt(y % 1000 / 100);
+        var xxox = parseInt(y % 100 / 10);
+        var xxxo = y % 10;
 
         return solarLunar.nStr1[oxxx] + solarLunar.nStr1[xoxx] + solarLunar.nStr1[xxox] + solarLunar.nStr1[xxxo] + "\u5E74";
     },
