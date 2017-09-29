@@ -1,4 +1,4 @@
-# solarLunar [![Build Status](https://travis-ci.org/yize/solarlunar.svg?branch=master)](https://travis-ci.org/yize/solarlunar) [![Coverage Status](https://img.shields.io/coveralls/yize/solarlunar/master.svg?style=flat)](https://coveralls.io/github/yize/solarlunar?branch=master) [![npm version](https://img.shields.io/npm/v/solarlunar.svg?style=flat)](https://www.npmjs.com/package/solarlunar) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md#pull-requests)
+# solarLunar [![Build Status](https://travis-ci.org/yize/solarlunar.svg?branch=master)](https://travis-ci.org/yize/solarlunar) [![Coverage Status](https://coveralls.io/repos/github/yize/solarlunar/badge.svg?branch=master)](https://coveralls.io/github/yize/solarlunar?branch=master) [![npm version](https://img.shields.io/npm/v/solarlunar.svg?style=flat)](https://www.npmjs.com/package/solarlunar) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md#pull-requests)
 
 -----
 
