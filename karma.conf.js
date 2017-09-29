@@ -5,7 +5,7 @@ var webpack = require('webpack');
 var path = require('path');
 
 module.exports = function (config) {
-  var indexSpec = '/Users/yize/github/yize/solarlunar/test/solarLunar.spec.js';
+  var indexSpec = path.join(process.cwd(), './test/solarLunar.spec.js');
   var files = [
     indexSpec,
   ];
