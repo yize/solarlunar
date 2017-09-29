@@ -1,4 +1,5 @@
-# solarLunar [![Build Status](https://travis-ci.org/yize/solarlunar.svg?branch=master)](https://travis-ci.org/yize/solarlunar)
+# solarLunar [![Build Status](https://travis-ci.org/yize/solarlunar.svg?branch=master)](https://travis-ci.org/yize/solarlunar) [![Coverage Status](https://img.shields.io/coveralls/yize/solarlunar/master.svg?style=flat)](https://coveralls.io/github/yize/solarlunar?branch=master) [![npm version](https://img.shields.io/npm/v/solarlunar.svg?style=flat)](https://www.npmjs.com/package/solarlunar) [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg)](CONTRIBUTING.md#pull-requests)
+
 -----
 
 1900年至2100年公历、农历互转
@@ -11,10 +12,10 @@
 ## 用法：
 
 ``` js
-var solarLunar = require('solarLunar')
+import solarLunar from 'solarLunar';
 
-var solar2lunarData = solarLunar.solar2lunar(2015, 10, 8);// 输入的日子为公历
-var lunar2solarData = solarLunar.lunar2solar(2015, 8, 26);// 输入的日子为农历
+const solar2lunarData = solarLunar.solar2lunar(2015, 10, 8);// 输入的日子为公历
+const lunar2solarData = solarLunar.lunar2solar(2015, 8, 26);// 输入的日子为农历
 ```
 
 output:
@@ -99,31 +100,31 @@ solarLunar.lunar2solar(2015, 08, 26) // 等价于上者
 - (Number)`lYearDays` : 返回农历y年一整年的总天数
 
 ``` js
-var count = solarLunar.lYearDays(1987) ;//count=387
+const count = solarLunar.lYearDays(1987) ;//count=387
 ```
 
 - (Number(0-12))`leapMonth` : 返回农历y年闰月是哪个月；若y年没有闰月 则返回0
 
 ```js
-var leapMonth = solarLunar.leapMonth(1987) ;//leapMonth=6
+const leapMonth = solarLunar.leapMonth(1987) ;//leapMonth=6
 ```
 
 - (Number(0|29|30))`leapDays` : 返回农历y年闰月的天数 若该年没有闰月则返回0
 
 ```js
-var leapMonthDay = solarLunar.leapDays(1987) ;//leapMonthDay=29
+const leapMonthDay = solarLunar.leapDays(1987) ;//leapMonthDay=29
 ```
 
 - (Number(-1|29|30))`monthDays` : 返回农历y年m月（非闰月）的总天数，计算m为闰月时的天数请使用leapDays方法
 
 ```js
-var MonthDay = solarLunar.monthDays(1987,9) ;//MonthDay=29
+const MonthDay = solarLunar.monthDays(1987,9) ;//MonthDay=29
 ```
 
 -(Number (-1、28、29、30、31))`solarDays` : 返回公历(!)y年m月的天数
 
 ```js
-var solarMonthDay = solarLunar.leapDays(1987) ;//solarMonthDay=30
+const solarMonthDay = solarLunar.leapDays(1987) ;//solarMonthDay=30
 ```
 
 -(Number)`toGanZhi` : 传入offset偏移量返回干支
@@ -135,25 +136,25 @@ var solarMonthDay = solarLunar.leapDays(1987) ;//solarMonthDay=30
     - 第二个参数为二十四节气中的第几个节气(1~24)；从n=1(小寒)算起
 
 ```js
-var _24 = solarLunar.getTerm(1987,3) ;//_24=4;意即1987年2月4日立春
+const _24 = solarLunar.getTerm(1987,3) ;//_24=4;意即1987年2月4日立春
 ```
 
 - (String)`toChinaMonth` :  传入农历数字月份返回汉语通俗表示法
 
 ```js
-var cnMonth = solarLunar.toChinaMonth(12) ;//cnMonth='腊月'
+const cnMonth = solarLunar.toChinaMonth(12) ;//cnMonth='腊月'
 ```
 
 - (String)`toChinaDay` :  传入农历日期数字返回汉字表示法
 
 ```js
-var cnDay = solarLunar.toChinaDay(21) ;//cnMonth='廿一'
+const cnDay = solarLunar.toChinaDay(21) ;//cnMonth='廿一'
 ```
 
 - (String)`getAnimal` :  年份转生肖[!仅能大致转换] => 精确划分生肖分界线是“立春”
 
 ```js
-var animal = solarLunar.getAnimal(1987) ;//animal='兔'
+const animal = solarLunar.getAnimal(1987) ;//animal='兔'
 ```
 
 
