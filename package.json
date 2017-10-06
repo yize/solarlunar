@@ -1,8 +1,8 @@
 {
   "name": "solarlunar",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "阳历阴历（公历农历）互转",
-  "main": "build/solarlunar.min.js",
+  "main": "lib/solarlunar.min.js",
   "scripts": {
     "build": "webpack --env build",
     "dev": "webpack --progress --colors --watch --env dev",
