@@ -1,16 +1,16 @@
+# 2.0.2 / 2018-03-07
 
-2.0.1 / 2017-10-06
-==================
+* fix #3
 
-  * fix main #2
+# 2.0.1 / 2017-10-06
 
-2.0.0 / 2017-09-29
-==================
+* fix main #2
 
-  * Add yearCn, thank you @ThaddeusJiang
-  * ES6
+# 2.0.0 / 2017-09-29
 
-1.0.0 / 2015-10-11
-==================
+* Add yearCn, thank you @ThaddeusJiang
+* ES6
 
-  * First Version
+# 1.0.0 / 2015-10-11
+
+* First Version

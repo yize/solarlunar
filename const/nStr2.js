@@ -4,6 +4,4 @@
  * @trans ['初','十','廿','卅']
  * @return Cn string
  */
-export default [
-  '\u521d', '\u5341', '\u5eff', '\u5345'
-];
+export default ['\u521d', '\u5341', '\u5eff', '\u5345'];

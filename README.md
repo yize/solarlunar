@@ -29,7 +29,7 @@
 ## 用法：
 
 ```js
-import solarLunar from "solarLunar";
+import solarLunar from 'solarLunar';
 
 const solar2lunarData = solarLunar.solar2lunar(2015, 10, 8); // 输入的日子为公历
 const lunar2solarData = solarLunar.lunar2solar(2015, 8, 26); // 输入的日子为农历
@@ -67,20 +67,20 @@ output:
   * 参数 : (Number)年,(Number)月,(Number)日
 
 
-  ```js
-  solarLunar.solar2lunar(2015, 10, 8);
-  solarLunar.solar2lunar(2015, 10, 08); // 等价于上者
-  ```
+```js
+solarLunar.solar2lunar(2015, 10, 8);
+solarLunar.solar2lunar(2015, 10, 08); // 等价于上者
+```
 
 * (Object)`solarLunar.lunar2solar` : 输入的日子为农历年月日
 
   * 参数 : (Number)年,(Number)月,(Number)日
 
 
-  ```js
-  solarLunar.lunar2solar(2015, 8, 26);
-  solarLunar.lunar2solar(2015, 08, 26); // 等价于上者
-  ```
+```js
+solarLunar.lunar2solar(2015, 8, 26);
+solarLunar.lunar2solar(2015, 08, 26); // 等价于上者
+```
 
 * (Array)`solarLunar.lunarInfo` : 农历 1900-2100 的润大小信息表
 

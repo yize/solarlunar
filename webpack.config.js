@@ -7,7 +7,8 @@ const env = require('yargs').argv.env; // use --env with webpack 2
 
 let libraryName = 'solarlunar';
 
-let plugins = [], outputFile;
+let plugins = [],
+  outputFile;
 
 if (env === 'build') {
   plugins.push(new UglifyJsPlugin({ minimize: true }));
@@ -37,7 +38,7 @@ const config = {
         test: /(\.jsx|\.js)$/,
         loader: 'eslint-loader',
         exclude: /node_modules/
-      },
+      }
     ]
   },
   resolve: {

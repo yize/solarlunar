@@ -19,6 +19,7 @@ import lTermInfo from '../const/lTermInfo';
 import nStr1 from '../const/nStr1';
 import nStr2 from '../const/nStr2';
 import nStr3 from '../const/nStr3';
+import nStr4 from '../const/nStr4';
 
 const solarLunar = {
   lunarInfo,
@@ -31,6 +32,7 @@ const solarLunar = {
   nStr1,
   nStr2,
   nStr3,
+  nStr4,
   /**
    * 返回农历y年一整年的总天数
    * @param lunar Year
@@ -182,7 +184,7 @@ const solarLunar = {
     var xxox = parseInt(y % 100 / 10);
     var xxxo = y % 10;
 
-    return solarLunar.nStr1[oxxx] + solarLunar.nStr1[xoxx] + solarLunar.nStr1[xxox] + solarLunar.nStr1[xxxo] + "\u5E74";
+    return solarLunar.nStr4[oxxx] + solarLunar.nStr4[xoxx] + solarLunar.nStr4[xxox] + solarLunar.nStr4[xxxo] + "\u5E74";
   },
 
   /**
