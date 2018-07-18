@@ -290,8 +290,9 @@ const solarLunar = {
     var year = i;
 
     var leap = solarLunar.leapMonth(i); //闰哪个月
-    var isLeap = false;
 
+    var isLeap = false;
+    
     //效验闰月
     for (i = 1; i < 13 && offset > 0; i++) {
       //闰月
@@ -304,9 +305,10 @@ const solarLunar = {
         temp = solarLunar.monthDays(year, i);//计算农历普通月天数
       }
       //解除闰月
-      if (isLeap == true && i == (leap + 1)) {
-        isLeap = false;
-      }
+      // if (isLeap == true && i == (leap + 1)) {
+      //   console.log(4)
+      //   isLeap = false;
+      // }
       offset -= temp;
     }
 
