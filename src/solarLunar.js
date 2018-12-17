@@ -364,14 +364,13 @@ const solarLunar = {
     //日柱 当月一日与 1900/1/1 相差天数
     var dayCyclical = Date.UTC(y, sm, 1, 0, 0, 0, 0) / 86400000 + 25567 + 10;
     var gzD = solarLunar.toGanZhi(dayCyclical + d - 1);
-
     return {
       'lYear': year,
       'lMonth': month,
       'lDay': day,
       'animal': solarLunar.getAnimal(year),
       'yearCn': solarLunar.toChinaYear(year),
-      'monthCn': (isLeap ? "\u95f0" : '') + solarLunar.toChinaMonth(month),
+      'monthCn': (isLeap && leap === month ? "\u95f0" : '') + solarLunar.toChinaMonth(month),
       'dayCn': solarLunar.toChinaDay(day),
       'cYear': y,
       'cMonth': m,

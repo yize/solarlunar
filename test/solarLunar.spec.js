@@ -6,6 +6,7 @@ const solar2lunarData2 = solar2lunar(2015, 10, 8); // 转换为阴历
 const lunar2solarData = lunar2solar(2015, 10, 2); // 转换为公历
 const lunar2solarData2 = lunar2solar(2015, 8, 26); // 转换为公历
 const solar2lunarData3 = solar2lunar(2033, 12, 23); // 转换为阴历
+const solar2lunarData4 = solar2lunar(2017, 12, 14); // 转换为阴历
 
 describe('should work', function () {
   describe('solar2lunar', function () {
@@ -142,6 +143,12 @@ describe('should work', function () {
   describe('2033/12/23', function () {
     it('should be leap', function () {
       should(solar2lunarData3.isLeap).be.true();
+    });
+  });
+  describe('2017/12/14', function () {
+    it('should not be leap', function () {
+      console.log(solar2lunarData4);
+      should(solar2lunarData4.monthCn).be.equal('十月');
     });
   });
 });
