@@ -305,10 +305,9 @@ const solarLunar = {
         temp = solarLunar.monthDays(year, i);//计算农历普通月天数
       }
       //解除闰月
-      // if (isLeap == true && i == (leap + 1)) {
-      //   console.log(4)
-      //   isLeap = false;
-      // }
+      if (isLeap == true && i == (leap + 1)) {
+        isLeap = false;
+      }
       offset -= temp;
     }
 
