@@ -8,6 +8,10 @@ const lunar2solarData2 = lunar2solar(2015, 8, 26); // 转换为公历
 const solar2lunarData3 = solar2lunar(2033, 12, 23); // 转换为阴历
 const solar2lunarData4 = solar2lunar(2017, 12, 14); // 转换为阴历
 
+const solar2lunarData5 = solar2lunar(1949, 8, 14); // 转换为阴历 7.20
+const solar2lunarData6 = solar2lunar(1949, 9, 14); // 转换为阴历 闰月 7.20
+const solar2lunarData7 = solar2lunar(1949, 10, 14); // 转换为阴历 8.23
+
 describe('should work', function () {
   describe('solar2lunar', function () {
     it('should have property solar2lunar', function () {
@@ -147,8 +151,31 @@ describe('should work', function () {
   });
   describe('2017/12/14', function () {
     it('should not be leap', function () {
-      console.log(solar2lunarData4);
       should(solar2lunarData4.monthCn).be.equal('十月');
+    });
+  });
+  describe('1949/8/14', function () {
+    it('monthCn should equal 七月', function () {
+      should(solar2lunarData5.monthCn).be.equal('七月');
+    });
+    it('isLeap should equal false', function () {
+      solar2lunarData5.isLeap.should.be.false();
+    });
+  });
+  describe('1949/9/14', function () {
+    it('monthCn should equal 闰七月', function () {
+      should(solar2lunarData6.monthCn).be.equal('闰七月');
+    });
+    it('isLeap should equal true', function () {
+      solar2lunarData6.isLeap.should.be.true();
+    });
+  });
+  describe('1949/10/14', function () {
+    it('monthCn should equal 八月', function () {
+      should(solar2lunarData7.monthCn).be.equal('八月');
+    });
+    it('isLeap should equal false', function () {
+      solar2lunarData7.isLeap.should.be.false();
     });
   });
 });
