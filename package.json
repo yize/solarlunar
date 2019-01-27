@@ -7,14 +7,21 @@
     "build": "webpack --env build",
     "dev": "webpack --progress --colors --watch --env dev",
     "test": "karma start karma.conf.js",
-    "test:watch":
-      "mocha --compilers js:babel-core/register --colors -w ./test/*.spec.js"
+    "test:watch": "mocha --compilers js:babel-core/register --colors -w ./test/*.spec.js"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/yize/solarlunar.git"
   },
-  "keywords": ["calendar", "公历", "农历", "阳历", "阴历", "solar", "lunar"],
+  "keywords": [
+    "calendar",
+    "公历",
+    "农历",
+    "阳历",
+    "阴历",
+    "solar",
+    "lunar"
+  ],
   "author": "yize",
   "license": "ISC",
   "bugs": {
