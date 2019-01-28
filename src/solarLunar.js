@@ -332,7 +332,7 @@ const solarLunar = {
     var term3 = solarLunar.getTerm(y, 3); //该公历年立春日期
     var gzY = solarLunar.toGanZhi(y - 4);//普通按年份计算，下方尚需按立春节气来修正
     var termTimestamp = new Date(y, 1, term3).getTime()
-    let dayTimestamp = new Date(y, sm, d).getTime()
+    var dayTimestamp = new Date(y, sm, d).getTime()
     //依据立春日进行修正gzY
     if (dayTimestamp < termTimestamp) {
       gzY = solarLunar.toGanZhi(y - 5);
