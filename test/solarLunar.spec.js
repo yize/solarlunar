@@ -11,6 +11,9 @@ const solar2lunarData4 = solar2lunar(2017, 12, 14); // 转换为阴历
 const solar2lunarData5 = solar2lunar(1949, 8, 14); // 转换为阴历 7.20
 const solar2lunarData6 = solar2lunar(1949, 9, 14); // 转换为阴历 闰月 7.20
 const solar2lunarData7 = solar2lunar(1949, 10, 14); // 转换为阴历 8.23
+const solar2lunarData8 = solar2lunar(2019, 1, 31); // 转换为阴历 2019.1.27 干支
+const solar2lunarData9 = solar2lunar(2019, 2, 4); // 转换为阴历 2019.1.27 干支
+const solar2lunarData10 = solar2lunar(2018, 2, 2); // 转换为阴历 2019.1.27 干支
 
 describe('should work', function () {
   describe('solar2lunar', function () {
@@ -176,6 +179,21 @@ describe('should work', function () {
     });
     it('isLeap should equal false', function () {
       solar2lunarData7.isLeap.should.be.false();
+    });
+  });
+  describe('2019/2/1', function () {
+    it('gzYear should be 戊戌', function () {
+      should(solar2lunarData8.gzYear).be.equal('戊戌');
+    });
+  });
+  describe('2019/2/5', function () {
+    it('gzYear should be 己亥', function () {
+      should(solar2lunarData9.gzYear).be.equal('己亥');
+    });
+  });
+  describe('2018/2/2', function () {
+    it('gzYear should be 丁酉', function () {
+      should(solar2lunarData10.gzYear).be.equal('丁酉');
     });
   });
 });

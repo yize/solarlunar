@@ -329,14 +329,13 @@ const solarLunar = {
 
     //天干地支处理
     var sm = m - 1;
-    var term3 = solarLunar.getTerm(year, 3); //该农历年立春日期
-    var gzY = solarLunar.toGanZhi(year - 4);//普通按年份计算，下方尚需按立春节气来修正
-
+    var term3 = solarLunar.getTerm(y, 3); //该公历年立春日期
+    var gzY = solarLunar.toGanZhi(y - 4);//普通按年份计算，下方尚需按立春节气来修正
+    var termTimestamp = new Date(y, 1, term3).getTime()
+    var dayTimestamp = new Date(y, sm, d).getTime()
     //依据立春日进行修正gzY
-    if (sm < 2 && d < term3) {
-      gzY = solarLunar.toGanZhi(year - 5);
-    } else {
-      gzY = solarLunar.toGanZhi(year - 4);
+    if (dayTimestamp < termTimestamp) {
+      gzY = solarLunar.toGanZhi(y - 5);
     }
 
     //月柱 1900年1月小寒以前为 丙子月(60进制12)
