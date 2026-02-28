@@ -138,23 +138,47 @@ const solarLunar = {
     if (n < 1 || n > 24) {
       return -1;
     }
-    const table = lTermInfo[y - 1900];
-    // 优化：直接访问预计算的日期，避免重复解析整个字符串
-    const start = Math.floor((n - 1) / 4) * 5; // 每5个字符包含4个日期
-    const pos = (n - 1) % 4;
+    const _table = lTermInfo[y - 1900];
+    const _info = [
+      parseInt('0x' + _table.substr(0, 5)).toString(),
+      parseInt('0x' + _table.substr(5, 5)).toString(),
+      parseInt('0x' + _table.substr(10, 5)).toString(),
+      parseInt('0x' + _table.substr(15, 5)).toString(),
+      parseInt('0x' + _table.substr(20, 5)).toString(),
+      parseInt('0x' + _table.substr(25, 5)).toString()
+    ];
+    const _calDay = [
+      _info[0].substr(0, 1),
+      _info[0].substr(1, 2),
+      _info[0].substr(3, 1),
+      _info[0].substr(4, 2),
 
-    // 根据位置获取节气日期
-    let dateStr = '';
-    if (pos === 0) {
-      dateStr = table.substr(start, 1);
-    } else if (pos === 1) {
-      dateStr = table.substr(start + 1, 2);
-    } else if (pos === 2) {
-      dateStr = table.substr(start + 3, 1);
-    } else { // pos === 3
-      dateStr = table.substr(start + 4, 2);
-    }
-    return parseInt(dateStr);
+      _info[1].substr(0, 1),
+      _info[1].substr(1, 2),
+      _info[1].substr(3, 1),
+      _info[1].substr(4, 2),
+
+      _info[2].substr(0, 1),
+      _info[2].substr(1, 2),
+      _info[2].substr(3, 1),
+      _info[2].substr(4, 2),
+
+      _info[3].substr(0, 1),
+      _info[3].substr(1, 2),
+      _info[3].substr(3, 1),
+      _info[3].substr(4, 2),
+
+      _info[4].substr(0, 1),
+      _info[4].substr(1, 2),
+      _info[4].substr(3, 1),
+      _info[4].substr(4, 2),
+
+      _info[5].substr(0, 1),
+      _info[5].substr(1, 2),
+      _info[5].substr(3, 1),
+      _info[5].substr(4, 2)
+    ];
+    return parseInt(_calDay[n - 1]);
   },
 
   /**
@@ -169,7 +193,7 @@ const solarLunar = {
     const xxox = Math.floor(y % 100 / 10);
     const xxxo = y % 10;
 
-    return nStr4[oxxx] + nStr4[xoxx] + nStr4[xxox] + nStr4[xxxo] + "\u5E74";
+    return nStr4[oxxx] + nStr4[xoxx] + nStr4[xxox] + nStr4[xxxo] + '\u5E74';
   },
 
   /**
@@ -183,7 +207,7 @@ const solarLunar = {
       return -1;
     } //若参数错误 返回-1
     let s = nStr3[m - 1];
-    s += "\u6708";//加上月字
+    s += '\u6708';//加上月字
     return s;
   },
 
@@ -196,18 +220,18 @@ const solarLunar = {
   toChinaDay(d) { //日 => \u65e5
     let s = '';
     switch (d) {
-      case 10:
-        s = '\u521d\u5341';
-        break;
-      case 20:
-        s = '\u4e8c\u5341';
-        break;
-      case 30:
-        s = '\u4e09\u5341';
-        break;
-      default:
-        s = nStr2[Math.floor(d / 10)];
-        s += nStr1[d % 10];
+    case 10:
+      s = '\u521d\u5341';
+      break;
+    case 20:
+      s = '\u4e8c\u5341';
+      break;
+    case 30:
+      s = '\u4e09\u5341';
+      break;
+    default:
+      s = nStr2[Math.floor(d / 10)];
+      s += nStr1[d % 10];
     }
     return s;
   },
@@ -275,7 +299,7 @@ const solarLunar = {
     }
 
     const objDate = new Date(y, parseInt(m) - 1, d);
-    let i, initialLeap = 0, temp = 0;
+    let i, temp = 0;
     //修正ymd参数
     y = objDate.getFullYear();
     m = objDate.getMonth() + 1;
@@ -351,11 +375,10 @@ const solarLunar = {
     const sm = m - 1;
     const term3 = solarLunar.getTerm(y, 3); //该公历年立春日期
     let gzY = solarLunar.toGanZhi(y - 4); //普通按年份计算，下方尚需按立春节气来修正
-    const termTimestamp = new Date(y, 1, term3).getTime();
-    const dayTimestamp = new Date(y, sm, d).getTime();
     //依据立春日进行修正gzY
-    if (dayTimestamp < termTimestamp) {
-      gzY = solarLunar.toGanZhi(y - 5);
+    // 立春通常在2月3-5日之间，如果日期早于立春，应按上一年计算
+    if (m < 2 || (m === 2 && d < term3)) {
+      gzY = solarLunar.toGanZhi(y - 1 - 4);
     }
 
     //月柱 1900年1月小寒以前为 丙子月(60进制12)
@@ -363,6 +386,7 @@ const solarLunar = {
     const secondNode = solarLunar.getTerm(y, (m * 2)); //返回当月「节」为几日开始
 
     //依据12节气修正干支月
+    // 使用原始的正确算法：年干支索引*12 + 月份 + 偏移
     let gzM = solarLunar.toGanZhi((y - 1900) * 12 + m + 11);
     if (d >= firstNode) {
       gzM = solarLunar.toGanZhi((y - 1900) * 12 + m + 12);
@@ -388,7 +412,7 @@ const solarLunar = {
       'lDay': day,
       'animal': solarLunar.getAnimal(year),
       'yearCn': solarLunar.toChinaYear(year),
-      'monthCn': (isLeap && leapMonth === month ? "\u95f0" : '') + solarLunar.toChinaMonth(month),
+      'monthCn': (isLeap && leapMonth === month ? '\u95f0' : '') + solarLunar.toChinaMonth(month),
       'dayCn': solarLunar.toChinaDay(day),
       'cYear': y,
       'cMonth': m,
@@ -396,12 +420,12 @@ const solarLunar = {
       'gzYear': gzY,
       'gzMonth': gzM,
       'gzDay': gzD,
-      'isToday': isToday,
-      'isLeap': isLeap,
+      isToday,
+      isLeap,
       'nWeek': nWeekAdjusted, //数字表示周几顺应天朝周一开始的惯例
-      'ncWeek': "\u661f\u671f" + cWeek,
-      'isTerm': isTerm,
-      'term': term
+      'ncWeek': '\u661f\u671f' + cWeek,
+      isTerm,
+      term
     };
   },
 
@@ -424,9 +448,7 @@ const solarLunar = {
     if (isNaN(y) || isNaN(m) || isNaN(d)) {
       return -1;
     }
-    let leapOffset = 0;
     const leapMonth = solarLunar.leapMonth(y);
-    const leapDay = solarLunar.leapDays(y);
     if (isLeapMonth && (leapMonth !== m)) {
       return -1;
     } //传参要求计算该闰月公历 但该年得出的闰月与传参的月份并不同

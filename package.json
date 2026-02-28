@@ -20,12 +20,13 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:ui": "vitest --ui",
-    "lint": "eslint src --ext .js,.ts",
-    "lint:fix": "eslint src --ext .js,.ts --fix",
+    "lint": "eslint src --ext .js",
+    "lint:fix": "eslint src --ext .js --fix",
     "format": "prettier --write src test",
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "npm run build",
-    "release": "release-it"
+    "release": "release-it",
+    "perf": "node performance-test.js"
   },
   "repository": {
     "type": "git",
