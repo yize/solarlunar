@@ -7,13 +7,17 @@ const lunar2solarData = lunar2solar(2015, 10, 2); // 转换为公历
 const lunar2solarData2 = lunar2solar(2015, 8, 26); // 转换为公历
 const solar2lunarData3 = solar2lunar(2033, 12, 23); // 转换为阴历
 const solar2lunarData4 = solar2lunar(2017, 12, 14); // 转换为阴历
-
 const solar2lunarData5 = solar2lunar(1949, 8, 14); // 转换为阴历 7.20
 const solar2lunarData6 = solar2lunar(1949, 9, 14); // 转换为阴历 闰月 7.20
 const solar2lunarData7 = solar2lunar(1949, 10, 14); // 转换为阴历 8.23
 const solar2lunarData8 = solar2lunar(2019, 1, 31); // 转换为阴历 2019.1.27 干支
 const solar2lunarData9 = solar2lunar(2019, 2, 4); // 转换为阴历 2019.1.27 干支
 const solar2lunarData10 = solar2lunar(2018, 2, 2); // 转换为阴历 2019.1.27 干支
+
+// 新增测试用例：验证优化功能
+const solar2lunarValidationTest1 = solar2lunar(1800, 1, 1); // 验证输入验证 - 年份超出范围
+const solar2lunarValidationTest2 = solar2lunar(2015, 13, 1); // 验证输入验证 - 月份超出范围
+const solar2lunarValidationTest3 = solar2lunar(2015, 2, 30); // 验证输入验证 - 日期超出范围
 
 describe('should work', function () {
   describe('solar2lunar', function () {
@@ -194,6 +198,20 @@ describe('should work', function () {
   describe('2018/2/2', function () {
     it('gzYear should be 丁酉', function () {
       should(solar2lunarData10.gzYear).be.equal('丁酉');
+    });
+  });
+  
+  describe('Input validation', function () {
+    it('should return -1 for year out of range', function () {
+      should(solar2lunarValidationTest1).be.equal(-1);
+    });
+    
+    it('should return -1 for month out of range', function () {
+      should(solar2lunarValidationTest2).be.equal(-1);
+    });
+    
+    it('should return -1 for day out of range', function () {
+      should(solar2lunarValidationTest3).be.equal(-1);
     });
   });
 });

@@ -40,10 +40,21 @@ const solarLunar = {
    * @eg:var count = solarLunar.lYearDays(1987) ;//count=387
    */
   lYearDays: function (y) {
-    var i, sum = 348;
-    for (i = 0x8000; i > 0x8; i >>= 1) {
-      sum += (solarLunar.lunarInfo[y - 1900] & i) ? 1 : 0;
-    }
+    var sum = 348;
+    var info = solarLunar.lunarInfo[y - 1900];
+    // 优化：直接计算位数，减少循环
+    sum += (info & 0x8000) ? 1 : 0;
+    sum += (info & 0x4000) ? 1 : 0;
+    sum += (info & 0x2000) ? 1 : 0;
+    sum += (info & 0x1000) ? 1 : 0;
+    sum += (info & 0x0800) ? 1 : 0;
+    sum += (info & 0x0400) ? 1 : 0;
+    sum += (info & 0x0200) ? 1 : 0;
+    sum += (info & 0x0100) ? 1 : 0;
+    sum += (info & 0x0080) ? 1 : 0;
+    sum += (info & 0x0040) ? 1 : 0;
+    sum += (info & 0x0020) ? 1 : 0;
+    sum += (info & 0x0010) ? 1 : 0;
     return (sum + solarLunar.leapDays(y));
   },
 
@@ -130,46 +141,22 @@ const solarLunar = {
       return -1;
     }
     var _table = solarLunar.lTermInfo[y - 1900];
-    var _info = [
-      parseInt('0x' + _table.substr(0, 5)).toString(),
-      parseInt('0x' + _table.substr(5, 5)).toString(),
-      parseInt('0x' + _table.substr(10, 5)).toString(),
-      parseInt('0x' + _table.substr(15, 5)).toString(),
-      parseInt('0x' + _table.substr(20, 5)).toString(),
-      parseInt('0x' + _table.substr(25, 5)).toString()
-    ];
-    var _calDay = [
-      _info[0].substr(0, 1),
-      _info[0].substr(1, 2),
-      _info[0].substr(3, 1),
-      _info[0].substr(4, 2),
-
-      _info[1].substr(0, 1),
-      _info[1].substr(1, 2),
-      _info[1].substr(3, 1),
-      _info[1].substr(4, 2),
-
-      _info[2].substr(0, 1),
-      _info[2].substr(1, 2),
-      _info[2].substr(3, 1),
-      _info[2].substr(4, 2),
-
-      _info[3].substr(0, 1),
-      _info[3].substr(1, 2),
-      _info[3].substr(3, 1),
-      _info[3].substr(4, 2),
-
-      _info[4].substr(0, 1),
-      _info[4].substr(1, 2),
-      _info[4].substr(3, 1),
-      _info[4].substr(4, 2),
-
-      _info[5].substr(0, 1),
-      _info[5].substr(1, 2),
-      _info[5].substr(3, 1),
-      _info[5].substr(4, 2)
-    ];
-    return parseInt(_calDay[n - 1]);
+    // 优化：直接访问预计算的日期，避免重复解析整个字符串
+    var start = Math.floor((n-1) / 4) * 5; // 每5个字符包含4个日期
+    var pos = (n-1) % 4;
+    
+    // 根据位置获取节气日期
+    var dateStr = '';
+    if (pos === 0) {
+      dateStr = _table.substr(start, 1);
+    } else if (pos === 1) {
+      dateStr = _table.substr(start + 1, 2);
+    } else if (pos === 2) {
+      dateStr = _table.substr(start + 3, 1);
+    } else { // pos === 3
+      dateStr = _table.substr(start + 4, 2);
+    }
+    return parseInt(dateStr);
   },
 
   /**
@@ -218,10 +205,8 @@ const solarLunar = {
       case 20:
         s = '\u4e8c\u5341';
         break;
-        break;
       case 30:
         s = '\u4e09\u5341';
-        break;
         break;
       default:
         s = solarLunar.nStr2[Math.floor(d / 10)];
@@ -232,13 +217,22 @@ const solarLunar = {
 
 
   /**
-   * 年份转生肖[!仅能大致转换] => 精确划分生肖分界线是“立春”
+   * 年份转生肖 => 精确划分生肖分界线是"立春"
    * @param y year
+   * @param m month (可选，用于精确计算)
+   * @param d day (可选，用于精确计算)
    * @return Cn string
    * @eg:var animal = solarLunar.getAnimal(1987) ;//animal='兔'
-   * todo 生肖需要精确转换
    */
-  getAnimal: function (y) {
+  getAnimal: function (y, m, d) {
+    // 如果提供了月日参数，基于立春进行精确计算
+    if (m !== undefined && d !== undefined) {
+      var term3 = solarLunar.getTerm(y, 3); // 立春日期
+      // 如果日期在立春之前，则生肖按上一年计算
+      if (m < 2 || (m === 2 && d < term3)) {
+        y = y - 1;
+      }
+    }
     return solarLunar.animals[(y - 4) % 12];
   },
 
@@ -252,6 +246,38 @@ const solarLunar = {
    * @eg:console.log(solarLunar.solar2lunar(1987,11,01));
    */
   solar2lunar: function (y, m, d) { //参数区间1900.1.31~2100.12.31
+    // 输入验证
+    if (y == null || m == null || d == null) {
+      var objDate = new Date();
+      y = objDate.getFullYear();
+      m = objDate.getMonth() + 1;
+      d = objDate.getDate();
+    }
+    
+    // 类型转换和验证
+    y = parseInt(y, 10);
+    m = parseInt(m, 10);
+    d = parseInt(d, 10);
+    
+    if (isNaN(y) || isNaN(m) || isNaN(d)) {
+      return -1;
+    }
+    
+    if (y < 1900 || y > 2100) {
+      return -1;
+    }//年份限定、上限
+    if (y == 1900 && m == 1 && d < 31) {
+      return -1;
+    }//下限
+    
+    // 验证月份和日期的有效性
+    if (m < 1 || m > 12) {
+      return -1;
+    }
+    var maxDay = solarLunar.solarDays(y, m);
+    if (d < 1 || d > maxDay) {
+      return -1;
+    }
     if (y < 1900 || y > 2100) {
       return -1;
     }//年份限定、上限
@@ -267,13 +293,33 @@ const solarLunar = {
     //修正ymd参数
     var y = objDate.getFullYear(), m = objDate.getMonth() + 1, d = objDate.getDate();
     var offset = (Date.UTC(objDate.getFullYear(), objDate.getMonth(), objDate.getDate()) - Date.UTC(1900, 0, 31)) / 86400000;
-    for (i = 1900; i < 2101 && offset > 0; i++) {
-      temp = solarLunar.lYearDays(i);
-      offset -= temp;
+    
+    // 优化：使用二分查找快速定位年份
+    var startYear = 1900, endYear = 2100;
+    var currentOffset = 0;
+    var midYear;
+    
+    while (startYear <= endYear) {
+      midYear = Math.floor((startYear + endYear) / 2);
+      var tempOffset = currentOffset;
+      for (i = startYear; i <= midYear; i++) {
+        tempOffset += solarLunar.lYearDays(i);
+      }
+      
+      if (tempOffset <= offset) {
+        startYear = midYear + 1;
+        currentOffset = tempOffset;
+      } else {
+        endYear = midYear - 1;
+      }
     }
+    
+    // 精确调整年份和offset
+    i = startYear - 1;
+    offset -= currentOffset - solarLunar.lYearDays(i);
+    
     if (offset < 0) {
-      offset += temp;
-      i--;
+      offset += solarLunar.lYearDays(--i);
     }
 
     //是否今天
@@ -396,6 +442,15 @@ const solarLunar = {
    * @eg:console.log(solarLunar.lunar2solar(1987,9,10));
    */
   lunar2solar: function (y, m, d, isLeapMonth) {	//参数区间1900.1.31~2100.12.1
+    // 输入验证
+    y = parseInt(y, 10);
+    m = parseInt(m, 10);
+    d = parseInt(d, 10);
+    isLeapMonth = !!isLeapMonth; // 确保是布尔值
+    
+    if (isNaN(y) || isNaN(m) || isNaN(d)) {
+      return -1;
+    }
     var leapOffset = 0;
     var leapMonth = solarLunar.leapMonth(y);
     var leapDay = solarLunar.leapDays(y);
