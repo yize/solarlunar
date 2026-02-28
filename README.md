@@ -162,7 +162,17 @@ npm run lint
 
 # 格式化代码
 npm run format
+
+# 运行性能测试
+npm run perf
 ```
+
+## 文档
+
+* [快速入门](QUICKSTART.md) - 新手快速上手指南
+* [API 文档](API.md) - 完整的 API 方法和参数说明
+* [使用示例](EXAMPLES.md) - 各种功能的实用示例
+* [开发指南](DEVELOPMENT.md) - 项目架构和开发流程
 
 ## 贡献
 
