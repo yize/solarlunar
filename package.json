@@ -1,13 +1,36 @@
 {
+  "type": "module",
   "name": "solarlunar",
-  "version": "2.0.7",
-  "description": "阳历阴历（公历农历）互转",
-  "main": "lib/solarlunar.min.js",
+  "version": "3.0.0",
+  "description": "阳历阴历（公历农历）互转 - Modernized version",
+  "main": "dist/solarlunar.cjs",
+  "module": "dist/solarlunar.esm.js",
+  "browser": "dist/solarlunar.min.js",
+  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/solarlunar.esm.js",
+      "require": "./dist/solarlunar.cjs",
+      "browser": "./dist/solarlunar.min.js"
+    }
+  },
   "scripts": {
-    "build": "webpack --env build",
-    "dev": "webpack --progress --colors --watch --env dev",
-    "test": "karma start karma.conf.js",
-    "test:watch": "mocha --compilers js:babel-core/register --colors -w ./test/*.spec.js"
+    "build": "rollup -c",
+    "dev": "rollup -c -w",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:ui": "vitest --ui",
+    "lint": "eslint src --ext .js",
+    "lint:fix": "eslint src --ext .js --fix",
+    "format": "prettier --write src test",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build",
+    "release": "release-it",
+    "perf": "node performance-test.js",
+    "benchmark": "node benchmark.js",
+    "audit": "npm audit",
+    "outdated": "npm outdated",
+    "security": "npm audit --audit-level moderate"
   },
   "repository": {
     "type": "git",
@@ -20,7 +43,8 @@
     "阳历",
     "阴历",
     "solar",
-    "lunar"
+    "lunar",
+    "chinese-calendar"
   ],
   "author": "yize",
   "license": "ISC",
@@ -29,29 +53,26 @@
   },
   "homepage": "https://github.com/yize/solarlunar#readme",
   "devDependencies": {
-    "babel-cli": "6.24.1",
-    "babel-core": "^6.3.26",
-    "babel-eslint": "7.2.3",
-    "babel-loader": "7.0.0",
-    "babel-plugin-add-module-exports": "0.2.1",
-    "babel-preset-es2015": "6.24.1",
-    "chai": "3.5.0",
-    "electron": "^1.7.8",
-    "electron-prebuilt": "^1.4.13",
-    "eslint": "3.19.0",
-    "eslint-loader": "1.7.1",
-    "gulp": "^3.9.0",
-    "istanbul-instrumenter-loader": "^0.2.0",
-    "karma": "^1.7.1",
-    "karma-coverage": "^1.1.1",
-    "karma-coveralls": "^1.1.2",
-    "karma-electron-launcher": "^0.1.0",
-    "karma-mocha": "^1.3.0",
-    "karma-mocha-reporter": "^2.2.4",
-    "karma-webpack": "^2.0.4",
-    "mocha": "3.3.0",
-    "should": "~7.1.0",
-    "webpack": "3.1.0",
-    "yargs": "7.1.0"
-  }
+    "@babel/core": "^7.25.2",
+    "@babel/preset-env": "^7.25.4",
+    "@eslint/js": "^9.12.0",
+    "@rollup/plugin-commonjs": "^28.0.2",
+    "@rollup/plugin-node-resolve": "^16.0.0",
+    "@rollup/plugin-terser": "^0.4.4",
+    "@types/node": "^25.3.2",
+    "@vitest/ui": "^4.0.18",
+    "chai": "^5.1.1",
+    "eslint": "^9.12.0",
+    "globals": "^15.11.0",
+    "prettier": "^3.3.3",
+    "release-it": "^19.2.4",
+    "rollup": "^4.24.0",
+    "typescript": "^5.6.3",
+    "vitest": "^4.0.18"
+  },
+  "files": [
+    "dist/",
+    "README.md",
+    "LICENSE"
+  ]
 }

@@ -1,3 +1,3 @@
-import solarLunar from './solarLunar';
+import solarLunar from './solarLunar.js';
 
 export default solarLunar;

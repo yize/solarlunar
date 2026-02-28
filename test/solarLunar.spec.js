@@ -1,5 +1,6 @@
-import solarLunar, { solar2lunar, lunar2solar } from '../src/';
-import should from 'should';
+import solarLunar from '../src/index.js';
+const { solar2lunar, lunar2solar } = solarLunar;
+import { describe, it, expect } from 'vitest';
 
 const solar2lunarData = solar2lunar(2015, 10, 2); // 转换为阴历
 const solar2lunarData2 = solar2lunar(2015, 10, 8); // 转换为阴历
@@ -7,7 +8,6 @@ const lunar2solarData = lunar2solar(2015, 10, 2); // 转换为公历
 const lunar2solarData2 = lunar2solar(2015, 8, 26); // 转换为公历
 const solar2lunarData3 = solar2lunar(2033, 12, 23); // 转换为阴历
 const solar2lunarData4 = solar2lunar(2017, 12, 14); // 转换为阴历
-
 const solar2lunarData5 = solar2lunar(1949, 8, 14); // 转换为阴历 7.20
 const solar2lunarData6 = solar2lunar(1949, 9, 14); // 转换为阴历 闰月 7.20
 const solar2lunarData7 = solar2lunar(1949, 10, 14); // 转换为阴历 8.23
@@ -15,185 +15,269 @@ const solar2lunarData8 = solar2lunar(2019, 1, 31); // 转换为阴历 2019.1.27 
 const solar2lunarData9 = solar2lunar(2019, 2, 4); // 转换为阴历 2019.1.27 干支
 const solar2lunarData10 = solar2lunar(2018, 2, 2); // 转换为阴历 2019.1.27 干支
 
-describe('should work', function () {
-  describe('solar2lunar', function () {
-    it('should have property solar2lunar', function () {
-      solarLunar.should.have.property('solar2lunar');
+// 新增测试用例：验证优化功能
+const solar2lunarValidationTest1 = solar2lunar(1800, 1, 1); // 验证输入验证 - 年份超出范围
+const solar2lunarValidationTest2 = solar2lunar(2015, 13, 1); // 验证输入验证 - 月份超出范围
+const solar2lunarValidationTest3 = solar2lunar(2015, 2, 30); // 验证输入验证 - 日期超出范围
+
+describe('solarLunar', () => {
+  describe('solar2lunar', () => {
+    it('should have property solar2lunar', () => {
+      expect(solarLunar).toHaveProperty('solar2lunar');
     });
-    it('lYear should equal 2015', function () {
-      solar2lunarData.lYear.should.be.equal(2015);
+    
+    it('lYear should equal 2015', () => {
+      expect(solar2lunarData.lYear).toBe(2015);
     });
-    it('lMonth should equal 8', function () {
-      solar2lunarData.lMonth.should.be.equal(8);
+    
+    it('lMonth should equal 8', () => {
+      expect(solar2lunarData.lMonth).toBe(8);
     });
-    it('lDay should equal 20', function () {
-      solar2lunarData.lDay.should.be.equal(20);
+    
+    it('lDay should equal 20', () => {
+      expect(solar2lunarData.lDay).toBe(20);
     });
-    it('animal should equal 羊', function () {
-      solar2lunarData.animal.should.be.equal('羊');
+    
+    it('animal should equal 羊', () => {
+      expect(solar2lunarData.animal).toBe('羊');
     });
-    it('yearCn should equal 二零一五年', function () {
-      solar2lunarData.yearCn.should.be.equal('二零一五年');
+    
+    it('yearCn should equal 二零一五年', () => {
+      expect(solar2lunarData.yearCn).toBe('二零一五年');
     });
-    it('monthCn should equal 八月', function () {
-      solar2lunarData.monthCn.should.be.equal('八月');
+    
+    it('monthCn should equal 八月', () => {
+      expect(solar2lunarData.monthCn).toBe('八月');
     });
-    it('dayCn should equal 二十', function () {
-      solar2lunarData.dayCn.should.be.equal('二十');
+    
+    it('dayCn should equal 二十', () => {
+      expect(solar2lunarData.dayCn).toBe('二十');
     });
-    it('gzYear should equal 乙未', function () {
-      solar2lunarData.gzYear.should.be.equal('乙未');
+    
+    it('gzYear should equal 乙未', () => {
+      expect(solar2lunarData.gzYear).toBe('乙未');
     });
-    it('gzMonth should equal 乙酉', function () {
-      solar2lunarData.gzMonth.should.be.equal('乙酉');
+    
+    it('gzMonth should equal 乙酉', () => {
+      expect(solar2lunarData.gzMonth).toBe('乙酉');
     });
-    it('gzDay should equal 辛亥', function () {
-      solar2lunarData.gzDay.should.be.equal('辛亥');
+    
+    it('gzDay should equal 辛亥', () => {
+      expect(solar2lunarData.gzDay).toBe('辛亥');
     });
-    it('isToday should equal false', function () {
-      solar2lunarData.isToday.should.be.false();
+    
+    it('isToday should equal false', () => {
+      expect(solar2lunarData.isToday).toBe(false);
     });
-    it('isLeap should equal false', function () {
-      solar2lunarData.isLeap.should.be.false();
+    
+    it('isLeap should equal false', () => {
+      expect(solar2lunarData.isLeap).toBe(false);
     });
-    it('nWeek should equal 5', function () {
-      solar2lunarData.nWeek.should.be.equal(5);
+    
+    it('nWeek should equal 5', () => {
+      expect(solar2lunarData.nWeek).toBe(5);
     });
-    it('ncWeek should equal 星期五', function () {
-      solar2lunarData.ncWeek.should.be.equal('星期五');
+    
+    it('ncWeek should equal 星期五', () => {
+      expect(solar2lunarData.ncWeek).toBe('星期五');
     });
-    it('isTerm should equal false', function () {
-      solar2lunarData.isTerm.should.be.false();
+    
+    it('isTerm should equal false', () => {
+      expect(solar2lunarData.isTerm).toBe(false);
     });
-    it('term should equal empty string', function () {
-      should(solar2lunarData.term).be.exactly('');
+    
+    it('term should equal empty string', () => {
+      expect(solar2lunarData.term).toBe('');
     });
   });
 
-  describe('solar2lunar that has term', function () {
-    it('isTerm should be true', function () {
-      should(solar2lunarData2.isTerm).be.true();
+  describe('solar2lunar that has term', () => {
+    it('isTerm should be true', () => {
+      expect(solar2lunarData2.isTerm).toBe(true);
     });
-    it('term should not be null', function () {
-      should(solar2lunarData2.term).not.be.null();
+    
+    it('term should not be null', () => {
+      expect(solar2lunarData2.term).not.toBeNull();
     });
-    it('term should equal 寒露', function () {
-      should(solar2lunarData2.term).be.equal('寒露');
-    });
-  });
-
-  describe('lunar2solar', function () {
-    it('should have property lunar2solar', function () {
-      solarLunar.should.have.property('lunar2solar');
-    });
-    it('lYear should equal 2015', function () {
-      lunar2solarData.lYear.should.be.equal(2015);
-    });
-    it('lMonth should equal 10', function () {
-      lunar2solarData.lMonth.should.be.equal(10);
-    });
-    it('lDay should equal 2', function () {
-      lunar2solarData.lDay.should.be.equal(2);
-    });
-    it('animal should equal 羊', function () {
-      lunar2solarData.animal.should.be.equal('羊');
-    });
-    it('yearCn should equal 二零一五年', function () {
-      solar2lunarData.yearCn.should.be.equal('二零一五年');
-    });
-    it('monthCn should equal 十月', function () {
-      lunar2solarData.monthCn.should.be.equal('十月');
-    });
-    it('dayCn should equal 初二', function () {
-      lunar2solarData.dayCn.should.be.equal('初二');
-    });
-    it('gzYear should equal 乙未', function () {
-      lunar2solarData.gzYear.should.be.equal('乙未');
-    });
-    it('gzMonth should equal 丁亥', function () {
-      lunar2solarData.gzMonth.should.be.equal('丁亥');
-    });
-    it('gzDay should equal 癸巳', function () {
-      lunar2solarData.gzDay.should.be.equal('癸巳');
-    });
-    it('isToday should equal false', function () {
-      lunar2solarData.isToday.should.be.false();
-    });
-    it('isLeap should equal false', function () {
-      lunar2solarData.isLeap.should.be.false();
-    });
-    it('nWeek should equal 5', function () {
-      lunar2solarData.nWeek.should.be.equal(5);
-    });
-    it('ncWeek should equal 星期五', function () {
-      lunar2solarData.ncWeek.should.be.equal('星期五');
-    });
-    it('isTerm should equal false', function () {
-      lunar2solarData.isTerm.should.be.false();
-    });
-    it('term should equal empty string', function () {
-      should(lunar2solarData.term).be.exactly('');
+    
+    it('term should equal 寒露', () => {
+      expect(solar2lunarData2.term).toBe('寒露');
     });
   });
 
-  describe('lunar2solar that has term', function () {
-    it('isTerm should be true', function () {
-      should(lunar2solarData2.isTerm).be.true();
+  describe('lunar2solar', () => {
+    it('should have property lunar2solar', () => {
+      expect(solarLunar).toHaveProperty('lunar2solar');
     });
-    it('term should not be null', function () {
-      should(lunar2solarData2.term).not.be.null();
+    
+    it('lYear should equal 2015', () => {
+      expect(lunar2solarData.lYear).toBe(2015);
     });
-    it('term should equal 寒露', function () {
-      should(lunar2solarData2.term).be.equal('寒露');
+    
+    it('lMonth should equal 10', () => {
+      expect(lunar2solarData.lMonth).toBe(10);
+    });
+    
+    it('lDay should equal 2', () => {
+      expect(lunar2solarData.lDay).toBe(2);
+    });
+    
+    it('animal should equal 羊', () => {
+      expect(lunar2solarData.animal).toBe('羊');
+    });
+    
+    it('yearCn should equal 二零一五年', () => {
+      expect(solar2lunarData.yearCn).toBe('二零一五年');
+    });
+    
+    it('monthCn should equal 十月', () => {
+      expect(lunar2solarData.monthCn).toBe('十月');
+    });
+    
+    it('dayCn should equal 初二', () => {
+      expect(lunar2solarData.dayCn).toBe('初二');
+    });
+    
+    it('gzYear should equal 乙未', () => {
+      expect(lunar2solarData.gzYear).toBe('乙未');
+    });
+    
+    it('gzMonth should equal 丁亥', () => {
+      expect(lunar2solarData.gzMonth).toBe('丁亥');
+    });
+    
+    it('gzDay should equal 癸巳', () => {
+      expect(lunar2solarData.gzDay).toBe('癸巳');
+    });
+    
+    it('isToday should equal false', () => {
+      expect(lunar2solarData.isToday).toBe(false);
+    });
+    
+    it('isLeap should equal false', () => {
+      expect(lunar2solarData.isLeap).toBe(false);
+    });
+    
+    it('nWeek should equal 5', () => {
+      expect(lunar2solarData.nWeek).toBe(5);
+    });
+    
+    it('ncWeek should equal 星期五', () => {
+      expect(lunar2solarData.ncWeek).toBe('星期五');
+    });
+    
+    it('isTerm should equal false', () => {
+      expect(lunar2solarData.isTerm).toBe(false);
+    });
+    
+    it('term should equal empty string', () => {
+      expect(lunar2solarData.term).toBe('');
     });
   });
-  describe('2033/12/23', function () {
-    it('should be leap', function () {
-      should(solar2lunarData3.isLeap).be.true();
+
+  describe('lunar2solar that has term', () => {
+    it('isTerm should be true', () => {
+      expect(lunar2solarData2.isTerm).toBe(true);
+    });
+    
+    it('term should not be null', () => {
+      expect(lunar2solarData2.term).not.toBeNull();
+    });
+    
+    it('term should equal 寒露', () => {
+      expect(lunar2solarData2.term).toBe('寒露');
     });
   });
-  describe('2017/12/14', function () {
-    it('should not be leap', function () {
-      should(solar2lunarData4.monthCn).be.equal('十月');
+  
+  describe('2033/12/23', () => {
+    it('should be leap', () => {
+      expect(solar2lunarData3.isLeap).toBe(true);
     });
   });
-  describe('1949/8/14', function () {
-    it('monthCn should equal 七月', function () {
-      should(solar2lunarData5.monthCn).be.equal('七月');
-    });
-    it('isLeap should equal false', function () {
-      solar2lunarData5.isLeap.should.be.false();
+  
+  describe('2017/12/14', () => {
+    it('should not be leap', () => {
+      expect(solar2lunarData4.monthCn).toBe('十月');
     });
   });
-  describe('1949/9/14', function () {
-    it('monthCn should equal 闰七月', function () {
-      should(solar2lunarData6.monthCn).be.equal('闰七月');
+  
+  describe('1949/8/14', () => {
+    it('monthCn should equal 七月', () => {
+      expect(solar2lunarData5.monthCn).toBe('七月');
     });
-    it('isLeap should equal true', function () {
-      solar2lunarData6.isLeap.should.be.true();
-    });
-  });
-  describe('1949/10/14', function () {
-    it('monthCn should equal 八月', function () {
-      should(solar2lunarData7.monthCn).be.equal('八月');
-    });
-    it('isLeap should equal false', function () {
-      solar2lunarData7.isLeap.should.be.false();
+    
+    it('isLeap should equal false', () => {
+      expect(solar2lunarData5.isLeap).toBe(false);
     });
   });
-  describe('2019/2/1', function () {
-    it('gzYear should be 戊戌', function () {
-      should(solar2lunarData8.gzYear).be.equal('戊戌');
+  
+  describe('1949/9/14', () => {
+    it('monthCn should equal 闰七月', () => {
+      expect(solar2lunarData6.monthCn).toBe('闰七月');
+    });
+    
+    it('isLeap should equal true', () => {
+      expect(solar2lunarData6.isLeap).toBe(true);
     });
   });
-  describe('2019/2/5', function () {
-    it('gzYear should be 己亥', function () {
-      should(solar2lunarData9.gzYear).be.equal('己亥');
+  
+  describe('1949/10/14', () => {
+    it('monthCn should equal 八月', () => {
+      expect(solar2lunarData7.monthCn).toBe('八月');
+    });
+    
+    it('isLeap should equal false', () => {
+      expect(solar2lunarData7.isLeap).toBe(false);
     });
   });
-  describe('2018/2/2', function () {
-    it('gzYear should be 丁酉', function () {
-      should(solar2lunarData10.gzYear).be.equal('丁酉');
+  
+  describe('2019/2/1', () => {
+    it('gzYear should be 戊戌', () => {
+      expect(solar2lunarData8.gzYear).toBe('戊戌');
+    });
+  });
+  
+  describe('2019/2/5', () => {
+    it('gzYear should be 己亥', () => {
+      expect(solar2lunarData9.gzYear).toBe('己亥');
+    });
+  });
+  
+  describe('2018/2/2', () => {
+    it('gzYear should be 丁酉', () => {
+      expect(solar2lunarData10.gzYear).toBe('丁酉');
+    });
+  });
+  
+  describe('Input validation', () => {
+    it('should return -1 for year out of range', () => {
+      expect(solar2lunarValidationTest1).toBe(-1);
+    });
+    
+    it('should return -1 for month out of range', () => {
+      expect(solar2lunarValidationTest2).toBe(-1);
+    });
+    
+    it('should return -1 for day out of range', () => {
+      expect(solar2lunarValidationTest3).toBe(-1);
+    });
+  });
+  
+  describe('Function-specific tests', () => {
+    it('toChinaDay should handle day 20 correctly', () => {
+      expect(solarLunar.toChinaDay(20)).toBe('二十');
+    });
+    
+    it('toChinaDay should handle day 30 correctly', () => {
+      expect(solarLunar.toChinaDay(30)).toBe('三十');
+    });
+    
+    it('getAnimal should handle precise calculation', () => {
+      // Test with year only (old behavior)
+      expect(solarLunar.getAnimal(1987)).toBe('兔');
+      // Test with precise calculation (new behavior)
+      expect(solarLunar.getAnimal(1987, 1, 1)).toBe('虎'); // Before 立春
+      expect(solarLunar.getAnimal(1987, 3, 1)).toBe('兔'); // After 立春
     });
   });
 });
