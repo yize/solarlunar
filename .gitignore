@@ -59,5 +59,3 @@ yarn-debug.log*
 yarn-error.log*
 npm-shrinkwrap.json
 
-# Lockfile
-package-lock.json
