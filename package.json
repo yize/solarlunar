@@ -27,6 +27,7 @@
     "prepublishOnly": "npm run build",
     "release": "release-it",
     "perf": "node performance-test.js",
+    "benchmark": "node benchmark.js",
     "audit": "npm audit",
     "outdated": "npm outdated",
     "security": "npm audit --audit-level moderate"
