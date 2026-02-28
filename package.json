@@ -26,7 +26,10 @@
     "typecheck": "tsc --noEmit",
     "prepublishOnly": "npm run build",
     "release": "release-it",
-    "perf": "node performance-test.js"
+    "perf": "node performance-test.js",
+    "audit": "npm audit",
+    "outdated": "npm outdated",
+    "security": "npm audit --audit-level moderate"
   },
   "repository": {
     "type": "git",
