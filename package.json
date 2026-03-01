@@ -6,7 +6,7 @@
   "main": "dist/solarlunar.cjs",
   "module": "dist/solarlunar.esm.js",
   "browser": "dist/solarlunar.min.js",
-  "types": "dist/index.d.ts",
+  "types": "solarlunar.d.ts",
   "exports": {
     ".": {
       "import": "./dist/solarlunar.esm.js",
@@ -72,6 +72,7 @@
   },
   "files": [
     "dist/",
+    "solarlunar.d.ts",
     "README.md",
     "LICENSE"
   ]

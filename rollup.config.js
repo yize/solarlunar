@@ -16,40 +16,32 @@ export default [
       name: 'solarLunar',
       file: pkg.browser,
       format: 'umd',
-      sourcemap: true
+      sourcemap: true,
+      exports: 'named',
     },
-    plugins: [
-      resolve(),
-      commonjs(),
-      isProd && terser()
-    ].filter(Boolean)
+    plugins: [resolve(), commonjs(), isProd && terser()].filter(Boolean),
   },
-  
+
   // CommonJS build
   {
     input: 'src/index.js',
     output: {
       file: pkg.main,
       format: 'cjs',
-      sourcemap: true
+      sourcemap: true,
+      exports: 'named',
     },
-    plugins: [
-      resolve(),
-      commonjs()
-    ]
+    plugins: [resolve(), commonjs()],
   },
-  
+
   // ES module build
   {
     input: 'src/index.js',
     output: {
       file: pkg.module,
       format: 'es',
-      sourcemap: true
+      sourcemap: true,
     },
-    plugins: [
-      resolve(),
-      commonjs()
-    ]
-  }
+    plugins: [resolve(), commonjs()],
+  },
 ];
