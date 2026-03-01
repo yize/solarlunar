@@ -10,7 +10,7 @@
 [![Build Status](https://img.shields.io/github/actions/workflow/status/yize/solarlunar/test.yml?style=flat-square)](https://github.com/yize/solarlunar/actions)
 [![File Size](https://img.shields.io/bundlephobia/minzip/solarlunar?style=flat-square)](https://bundlephobia.com/package/solarlunar)
 
-*High-performance solar-lunar calendar conversion with天干地支, 生肖, and 24 solar terms support*
+_High-performance solar-lunar calendar conversion with天干地支, 生肖, and 24 solar terms support_
 
 </div>
 
@@ -32,9 +32,12 @@
 npm install solarlunar
 ```
 
+> **Note**: Use lowercase `solarlunar` (not `solarLunar`) when importing. Some case-sensitive file systems may fail to resolve the package with uppercase letters.
+
 ## 🛠️ Quick Start
 
 ### ES6 Modules
+
 ```javascript
 import solarLunar from 'solarlunar';
 
@@ -42,17 +45,19 @@ import solarLunar from 'solarlunar';
 const lunar = solarLunar.solar2lunar(2023, 10, 15);
 console.log(lunar.lYear, lunar.lMonth, lunar.lDay); // 2023 8 30
 
-// Lunar to Solar  
+// Lunar to Solar
 const solar = solarLunar.lunar2solar(2023, 8, 30);
 console.log(solar.cYear, solar.cMonth, solar.cDay); // 2023 10 15
 ```
 
 ### CommonJS
+
 ```javascript
 const solarLunar = require('solarlunar');
 ```
 
 ### Browser
+
 ```html
 <script src="https://unpkg.com/solarlunar/dist/solarlunar.min.js"></script>
 <script>
@@ -63,19 +68,23 @@ const solarLunar = require('solarlunar');
 ## 📋 API Reference
 
 ### solarLunar.solar2lunar(year, month, day)
+
 Convert solar date to lunar date.
 
 **Parameters:**
+
 - `year` (Number): Solar year (1900-2100)
-- `month` (Number): Solar month (1-12) 
+- `month` (Number): Solar month (1-12)
 - `day` (Number): Solar day (1-31)
 
 **Returns:** Object with lunar date information
 
 ### solarLunar.lunar2solar(year, month, day, isLeapMonth?)
+
 Convert lunar date to solar date.
 
 **Parameters:**
+
 - `year` (Number): Lunar year (1900-2100)
 - `month` (Number): Lunar month (1-12)
 - `day` (Number): Lunar day (1-30)
@@ -89,32 +98,32 @@ Convert lunar date to solar date.
 {
   // Basic lunar info
   lYear: 2023,              // Lunar year
-  lMonth: 8,                // Lunar month  
+  lMonth: 8,                // Lunar month
   lDay: 30,                 // Lunar day
   isLeap: false,            // Whether leap month
-  
+
   // Basic solar info
   cYear: 2023,              // Solar year
   cMonth: 10,               // Solar month
   cDay: 15,                 // Solar day
   isToday: false,           // Whether today
-  
+
   // Chinese representations
   yearCn: '二零二三年',       // Chinese year
   monthCn: '八月',           // Chinese month
   dayCn: '三十',             // Chinese day
   ncWeek: '星期日',           // Chinese weekday
-  
+
   // Stems and Branches
   gzYear: '癸卯',            // Year stem-branch
-  gzMonth: '辛酉',           // Month stem-branch  
+  gzMonth: '辛酉',           // Month stem-branch
   gzDay: '甲子',             // Day stem-branch
-  
+
   // Zodiac and terms
   animal: '兔',              // Zodiac animal
   isTerm: false,             // Whether solar term day
   term: '',                  // Solar term name if applicable
-  
+
   // Weekday info
   nWeek: 7                   // Weekday number (1-7 for Mon-Sun)
 }
@@ -123,6 +132,7 @@ Convert lunar date to solar date.
 ## 🧪 Examples
 
 ### Complete Conversion
+
 ```javascript
 const result = solarLunar.solar2lunar(2023, 12, 22); // Winter Solstice day
 
@@ -142,12 +152,14 @@ console.log(result);
 ```
 
 ### Zodiac Calculation
+
 ```javascript
 // Precise zodiac based on Spring Festival
 const animal = solarLunar.getAnimal(2023, 2, 5); // Accurate based on 立春
 ```
 
 ### Solar Term Detection
+
 ```javascript
 const hasTerm = solarLunar.solar2lunar(2023, 12, 22);
 if (hasTerm.isTerm) {
@@ -158,12 +170,14 @@ if (hasTerm.isTerm) {
 ## 🏗️ Architecture
 
 ### Modern Build System
+
 - **Rollup 4**: Optimized builds with tree-shaking
 - **Vitest**: Fast, modern testing framework
 - **ESLint + Prettier**: Code quality and formatting
 - **TypeScript**: Complete type definitions
 
 ### Performance Optimizations
+
 - Optimized algorithms for date calculations
 - Precomputed data structures
 - Efficient memory usage
@@ -171,11 +185,11 @@ if (hasTerm.isTerm) {
 
 ## 📊 Performance
 
-| Operation | Average Time | Throughput |
-|-----------|--------------|------------|
-| Solar to Lunar | < 0.003ms | >340,000 ops/sec |
-| Lunar to Solar | < 0.004ms | >270,000 ops/sec |
-| Zodiac Calculation | < 0.001ms | >41,000,000 ops/sec |
+| Operation          | Average Time | Throughput          |
+| ------------------ | ------------ | ------------------- |
+| Solar to Lunar     | < 0.003ms    | >340,000 ops/sec    |
+| Lunar to Solar     | < 0.004ms    | >270,000 ops/sec    |
+| Zodiac Calculation | < 0.001ms    | >41,000,000 ops/sec |
 
 ## 🛡️ Reliability
 
@@ -187,7 +201,7 @@ if (hasTerm.isTerm) {
 ## 📚 Documentation
 
 - [Quick Start Guide](QUICKSTART.md)
-- [API Documentation](API.md) 
+- [API Documentation](API.md)
 - [Usage Examples](EXAMPLES.md)
 - [Development Guide](DEVELOPMENT.md)
 - [Release Notes](RELEASE-NOTES.md)
@@ -201,7 +215,7 @@ We welcome contributions! Please see our [Development Guide](DEVELOPMENT.md) for
 ```bash
 npm install              # Install dependencies
 npm test                # Run tests
-npm run test:watch      # Watch mode for tests  
+npm run test:watch      # Watch mode for tests
 npm run dev             # Development build watch
 npm run build           # Production build
 npm run lint            # Code quality check
