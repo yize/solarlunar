@@ -44,18 +44,18 @@ const solarLunar = {
     let sum = 348;
     const info = lunarInfo[y - 1900];
     // 优化：直接计算位数，减少循环
-    sum += (info & 0x8000) ? 1 : 0;
-    sum += (info & 0x4000) ? 1 : 0;
-    sum += (info & 0x2000) ? 1 : 0;
-    sum += (info & 0x1000) ? 1 : 0;
-    sum += (info & 0x0800) ? 1 : 0;
-    sum += (info & 0x0400) ? 1 : 0;
-    sum += (info & 0x0200) ? 1 : 0;
-    sum += (info & 0x0100) ? 1 : 0;
-    sum += (info & 0x0080) ? 1 : 0;
-    sum += (info & 0x0040) ? 1 : 0;
-    sum += (info & 0x0020) ? 1 : 0;
-    sum += (info & 0x0010) ? 1 : 0;
+    sum += info & 0x8000 ? 1 : 0;
+    sum += info & 0x4000 ? 1 : 0;
+    sum += info & 0x2000 ? 1 : 0;
+    sum += info & 0x1000 ? 1 : 0;
+    sum += info & 0x0800 ? 1 : 0;
+    sum += info & 0x0400 ? 1 : 0;
+    sum += info & 0x0200 ? 1 : 0;
+    sum += info & 0x0100 ? 1 : 0;
+    sum += info & 0x0080 ? 1 : 0;
+    sum += info & 0x0040 ? 1 : 0;
+    sum += info & 0x0020 ? 1 : 0;
+    sum += info & 0x0010 ? 1 : 0;
     return sum + solarLunar.leapDays(y);
   },
 
@@ -65,8 +65,9 @@ const solarLunar = {
    * @returns {number} (0-12)
    * @eg:var leapMonth = solarLunar.leapMonth(1987) ;//leapMonth=6
    */
-  leapMonth(y) { //闰字编码 \u95f0
-    return (lunarInfo[y - 1900] & 0xf);
+  leapMonth(y) {
+    //闰字编码 \u95f0
+    return lunarInfo[y - 1900] & 0xf;
   },
 
   /**
@@ -77,7 +78,7 @@ const solarLunar = {
    */
   leapDays(y) {
     if (solarLunar.leapMonth(y)) {
-      return ((lunarInfo[y - 1900] & 0x10000) ? 30 : 29);
+      return lunarInfo[y - 1900] & 0x10000 ? 30 : 29;
     }
     return 0;
   },
@@ -93,7 +94,20 @@ const solarLunar = {
     if (m > 12 || m < 1) {
       return -1;
     } //月份参数从1至12，参数错误返回-1
-    return ((lunarInfo[y - 1900] & (0x10000 >> m)) ? 30 : 29);
+    return lunarInfo[y - 1900] & (0x10000 >> m) ? 30 : 29;
+  },
+
+  /**
+   * 获取时辰干支
+   * @param {number} h - 公历小时 (0-23)
+   * @param {number} dayGanIndex - 日干索引 (0-9)，0=甲，1=乙，...，9=癸
+   * @returns {string} 时辰干支，如 "甲子"
+   * @eg:var shichen = solarLunar.getShiChen(23, 0); // 23:00 的子时，日干为甲时
+   */
+  getShiChen(h, dayGanIndex) {
+    const hourZhiIndex = (h + 1) / 2 >= 24 ? 0 : Math.floor((h + 1) / 2) % 12;
+    const hourGanIndex = (dayGanIndex * 2 + hourZhiIndex) % 10;
+    return gan[hourGanIndex] + zhi[hourZhiIndex];
   },
 
   /**
@@ -108,10 +122,11 @@ const solarLunar = {
       return -1;
     } //若参数错误 返回-1
     const ms = m - 1;
-    if (ms === 1) { //2月份的闰平规律测算后确认返回28或29
-      return (((y % 4 === 0) && (y % 100 !== 0) || (y % 400 === 0)) ? 29 : 28);
+    if (ms === 1) {
+      //2月份的闰平规律测算后确认返回28或29
+      return (y % 4 === 0 && y % 100 !== 0) || y % 400 === 0 ? 29 : 28;
     } else {
-      return (solarMonth[ms]);
+      return solarMonth[ms];
     }
   },
 
@@ -121,7 +136,7 @@ const solarLunar = {
    * @returns {string} Cn string
    */
   toGanZhi(offset) {
-    return (gan[offset % 10] + zhi[offset % 12]);
+    return gan[offset % 10] + zhi[offset % 12];
   },
 
   /**
@@ -145,7 +160,7 @@ const solarLunar = {
       parseInt('0x' + _table.substr(10, 5)).toString(),
       parseInt('0x' + _table.substr(15, 5)).toString(),
       parseInt('0x' + _table.substr(20, 5)).toString(),
-      parseInt('0x' + _table.substr(25, 5)).toString()
+      parseInt('0x' + _table.substr(25, 5)).toString(),
     ];
     const _calDay = [
       _info[0].substr(0, 1),
@@ -176,7 +191,7 @@ const solarLunar = {
       _info[5].substr(0, 1),
       _info[5].substr(1, 2),
       _info[5].substr(3, 1),
-      _info[5].substr(4, 2)
+      _info[5].substr(4, 2),
     ];
     return parseInt(_calDay[n - 1]);
   },
@@ -187,10 +202,11 @@ const solarLunar = {
    * @returns {string}
    * @eg:
    */
-  toChinaYear(y) { //年 => \u5E74
+  toChinaYear(y) {
+    //年 => \u5E74
     const oxxx = Math.floor(y / 1000);
-    const xoxx = Math.floor(y % 1000 / 100);
-    const xxox = Math.floor(y % 100 / 10);
+    const xoxx = Math.floor((y % 1000) / 100);
+    const xxox = Math.floor((y % 100) / 10);
     const xxxo = y % 10;
 
     return nStr4[oxxx] + nStr4[xoxx] + nStr4[xxox] + nStr4[xxxo] + '\u5E74';
@@ -202,12 +218,13 @@ const solarLunar = {
    * @returns {string}
    * @eg:var cnMonth = solarLunar.toChinaMonth(12) ;//cnMonth='腊月'
    */
-  toChinaMonth(m) { // 月 => \u6708
+  toChinaMonth(m) {
+    // 月 => \u6708
     if (m > 12 || m < 1) {
       return -1;
     } //若参数错误 返回-1
     let s = nStr3[m - 1];
-    s += '\u6708';//加上月字
+    s += '\u6708'; //加上月字
     return s;
   },
 
@@ -217,7 +234,8 @@ const solarLunar = {
    * @returns {string} Cn string
    * @eg:var cnDay = solarLunar.toChinaDay(21) ;//cnMonth='廿一'
    */
-  toChinaDay(d) { //日 => \u65e5
+  toChinaDay(d) {
+    //日 => \u65e5
     let s = '';
     switch (d) {
     case 10:
@@ -264,7 +282,8 @@ const solarLunar = {
    * @returns {object} JSON object
    * @eg:console.log(solarLunar.solar2lunar(1987,11,01));
    */
-  solar2lunar(y, m, d) { //参数区间1900.1.31~2100.12.31
+  solar2lunar(y, m, d) {
+    //参数区间1900.1.31~2100.12.31
     // 输入验证
     if (y == null || m == null || d == null) {
       const objDate = new Date();
@@ -299,12 +318,16 @@ const solarLunar = {
     }
 
     const objDate = new Date(y, parseInt(m) - 1, d);
-    let i, temp = 0;
+    let i,
+      temp = 0;
     //修正ymd参数
     y = objDate.getFullYear();
     m = objDate.getMonth() + 1;
     d = objDate.getDate();
-    let offset = (Date.UTC(objDate.getFullYear(), objDate.getMonth(), objDate.getDate()) - Date.UTC(1900, 0, 31)) / 86400000;
+    let offset =
+      (Date.UTC(objDate.getFullYear(), objDate.getMonth(), objDate.getDate()) -
+        Date.UTC(1900, 0, 31)) /
+      86400000;
 
     // 使用原有的线性搜索算法以保持兼容性，但修复变量重声明问题
     temp = 0;
@@ -316,13 +339,17 @@ const solarLunar = {
       offset += temp;
       i--;
     }
-    
+
     const finalYear = i;
 
     //是否今天
     const isTodayObj = new Date();
     let isToday = false;
-    if (isTodayObj.getFullYear() === y && isTodayObj.getMonth() + 1 === m && isTodayObj.getDate() === d) {
+    if (
+      isTodayObj.getFullYear() === y &&
+      isTodayObj.getMonth() + 1 === m &&
+      isTodayObj.getDate() === d
+    ) {
       isToday = true;
     }
     //星期几
@@ -340,7 +367,7 @@ const solarLunar = {
     //效验闰月
     for (i = 1; i < 13 && offset > 0; i++) {
       //闰月
-      if (leapMonth > 0 && i === (leapMonth + 1) && isLeap === false) {
+      if (leapMonth > 0 && i === leapMonth + 1 && isLeap === false) {
         --i;
         isLeap = true;
         temp = solarLunar.leapDays(year); //计算农历闰月天数
@@ -348,7 +375,7 @@ const solarLunar = {
         temp = solarLunar.monthDays(year, i); //计算农历普通月天数
       }
       //解除闰月
-      if (isLeap === true && i === (leapMonth + 1)) {
+      if (isLeap === true && i === leapMonth + 1) {
         isLeap = false;
       }
       offset -= temp;
@@ -372,6 +399,8 @@ const solarLunar = {
     const day = offset + 1;
 
     //天干地支处理
+    // 注意：干支年以立春为分界线，这是中国传统历法
+    // 立春通常在2月3-5日之间，立春之前出生的人，干支属上一年
     const sm = m - 1;
     const term3 = solarLunar.getTerm(y, 3); //该公历年立春日期
     let gzY = solarLunar.toGanZhi(y - 4); //普通按年份计算，下方尚需按立春节气来修正
@@ -382,8 +411,8 @@ const solarLunar = {
     }
 
     //月柱 1900年1月小寒以前为 丙子月(60进制12)
-    const firstNode = solarLunar.getTerm(y, (m * 2 - 1)); //返回当月「节」为几日开始
-    const secondNode = solarLunar.getTerm(y, (m * 2)); //返回当月「节」为几日开始
+    const firstNode = solarLunar.getTerm(y, m * 2 - 1); //返回当月「节」为几日开始
+    const secondNode = solarLunar.getTerm(y, m * 2); //返回当月「节」为几日开始
 
     //依据12节气修正干支月
     // 使用原始的正确算法：年干支索引*12 + 月份 + 偏移
@@ -407,25 +436,25 @@ const solarLunar = {
     const dayCyclical = Date.UTC(y, sm, 1, 0, 0, 0, 0) / 86400000 + 25567 + 10;
     const gzD = solarLunar.toGanZhi(dayCyclical + d - 1);
     return {
-      'lYear': year,
-      'lMonth': month,
-      'lDay': day,
-      'animal': solarLunar.getAnimal(year),
-      'yearCn': solarLunar.toChinaYear(year),
-      'monthCn': (isLeap && leapMonth === month ? '\u95f0' : '') + solarLunar.toChinaMonth(month),
-      'dayCn': solarLunar.toChinaDay(day),
-      'cYear': y,
-      'cMonth': m,
-      'cDay': d,
-      'gzYear': gzY,
-      'gzMonth': gzM,
-      'gzDay': gzD,
+      lYear: year,
+      lMonth: month,
+      lDay: day,
+      animal: solarLunar.getAnimal(year),
+      yearCn: solarLunar.toChinaYear(year),
+      monthCn: (isLeap && leapMonth === month ? '\u95f0' : '') + solarLunar.toChinaMonth(month),
+      dayCn: solarLunar.toChinaDay(day),
+      cYear: y,
+      cMonth: m,
+      cDay: d,
+      gzYear: gzY,
+      gzMonth: gzM,
+      gzDay: gzD,
       isToday,
       isLeap,
-      'nWeek': nWeekAdjusted, //数字表示周几顺应天朝周一开始的惯例
-      'ncWeek': '\u661f\u671f' + cWeek,
+      nWeek: nWeekAdjusted, //数字表示周几顺应天朝周一开始的惯例
+      ncWeek: '\u661f\u671f' + cWeek,
       isTerm,
-      term
+      term,
     };
   },
 
@@ -438,7 +467,8 @@ const solarLunar = {
    * @returns {object} JSON object
    * @eg:console.log(solarLunar.lunar2solar(1987,9,10));
    */
-  lunar2solar(y, m, d, isLeapMonth) { //参数区间1900.1.31~2100.12.1
+  lunar2solar(y, m, d, isLeapMonth) {
+    //参数区间1900.1.31~2100.12.1
     // 输入验证
     y = Number(y);
     m = Number(m);
@@ -449,10 +479,10 @@ const solarLunar = {
       return -1;
     }
     const leapMonth = solarLunar.leapMonth(y);
-    if (isLeapMonth && (leapMonth !== m)) {
+    if (isLeapMonth && leapMonth !== m) {
       return -1;
     } //传参要求计算该闰月公历 但该年得出的闰月与传参的月份并不同
-    if (y === 2100 && m === 12 && d > 1 || y === 1900 && m === 1 && d < 31) {
+    if ((y === 2100 && m === 12 && d > 1) || (y === 1900 && m === 1 && d < 31)) {
       return -1;
     } //超出了最大极限值
     const day = solarLunar.monthDays(y, m);
@@ -465,10 +495,12 @@ const solarLunar = {
     for (let i = 1900; i < y; i++) {
       offset += solarLunar.lYearDays(i);
     }
-    let leap = 0, isAdd = false;
+    let leap = 0,
+      isAdd = false;
     for (let i = 1; i < m; i++) {
       leap = solarLunar.leapMonth(y);
-      if (!isAdd) { //处理闰月
+      if (!isAdd) {
+        //处理闰月
         if (leap <= i && leap > 0) {
           offset += solarLunar.leapDays(y);
           isAdd = true;
@@ -488,7 +520,7 @@ const solarLunar = {
     const cD = calObj.getUTCDate();
 
     return solarLunar.solar2lunar(cY, cM, cD);
-  }
+  },
 };
 
 export default solarLunar;
