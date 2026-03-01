@@ -1,7 +1,7 @@
 {
   "type": "module",
   "name": "solarlunar",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "阳历阴历（公历农历）互转 - Modernized version",
   "main": "dist/solarlunar.cjs",
   "module": "dist/solarlunar.esm.js",
