@@ -521,6 +521,71 @@ const solarLunar = {
 
     return solarLunar.solar2lunar(cY, cM, cD);
   },
+
+  /**
+   * 获取指定日期的传统节日
+   * @param {number} year - 公历年
+   * @param {number} month - 公历月
+   * @param {number} day - 公历日
+   * @returns {string[]} 传统节日数组
+   */
+  getFestivals(year, month, day) {
+    const festivals = [];
+    const lunar = solarLunar.solar2lunar(year, month, day);
+    if (lunar === -1) return festivals;
+
+    const { lMonth, lDay } = lunar;
+
+    const fixedFestivals = {
+      '1-1': '春节',
+      '1-15': '元宵节',
+      '5-5': '端午节',
+      '7-7': '七夕节',
+      '8-15': '中秋节',
+      '9-9': '重阳节',
+      '12-8': '腊八节',
+      '12-23': '小年',
+    };
+
+    const key = `${lMonth}-${lDay}`;
+    if (fixedFestivals[key]) {
+      festivals.push(fixedFestivals[key]);
+    }
+
+    if (lMonth === 1 && lDay === 1) {
+      festivals.push('农历新年');
+    }
+
+    if (solarLunar.customFestivals) {
+      solarLunar.customFestivals.forEach((f) => {
+        if (f.month === lMonth && f.day === lDay) {
+          festivals.push(f.name);
+        }
+      });
+    }
+
+    return festivals;
+  },
+
+  /**
+   * 添加自定义农历节日
+   * @param {string} name - 节日名称
+   * @param {number} month - 农历月
+   * @param {number} day - 农历日
+   */
+  addFestival(name, month, day) {
+    if (!solarLunar.customFestivals) {
+      solarLunar.customFestivals = [];
+    }
+    solarLunar.customFestivals.push({ name, month, day });
+  },
+
+  /**
+   * 清除所有自定义节日
+   */
+  clearFestivals() {
+    solarLunar.customFestivals = [];
+  },
 };
 
 export default solarLunar;

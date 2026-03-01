@@ -45,6 +45,9 @@ declare const solarLunar: {
   toChinaDay(d: number): string;
   getAnimal(y: number, month?: number, day?: number): string;
   getShiChen(hour: number, dayGanIndex: number): string;
+  getFestivals(year: number, month: number, day: number): string[];
+  addFestival(name: string, month: number, day: number): void;
+  clearFestivals(): void;
   solar2lunar(year?: number, month?: number, day?: number): SolarLunarResult | -1;
   lunar2solar(
     year: number,
