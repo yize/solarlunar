@@ -9,6 +9,7 @@
   "types": "solarlunar.d.ts",
   "exports": {
     ".": {
+      "types": "./solarlunar.d.ts",
       "import": "./dist/solarlunar.esm.js",
       "require": "./dist/solarlunar.cjs",
       "browser": "./dist/solarlunar.min.js"
